@@ -1,37 +1,52 @@
+'use-client'
 import React from 'react'
-import album1 from '@/app/Media/albumCover4.png'
-import album2 from '@/app/Media/albumCover5.png'
-import album3 from '@/app/Media/albumCover6.png'
-import album4 from '@/app/Media/albumCover7.png'
-import album5 from '@/app/Media/albumCover8.png'
-import album6 from '@/app/Media/albumCover9.png'
-import Image from 'next/image'
+import Image, { StaticImageData } from 'next/image'
+import { useMusicStore } from '@/app/Store/musicStore'
+import { CiPlay1 } from 'react-icons/ci'
 
-function NewReleases() {
-    const newReleases = [{
-        albumCover: album1, title: "Life in a bubble"
-    }, {
-        albumCover: album2, title: "Mountain"
-    },{
-        albumCover: album3, title: "Limits"
-    },{
-        albumCover: album4, title: "Everything's black"
-    }, {
-        albumCover: album5, title: "Cancelled"
-    }, {
-        albumCover: album6, title: "Nomad"
-    }]
+type childType = {
+    children: string
+}
+
+export type songsData = {
+    album: {
+        name: string,
+        images: [{
+            url: string;
+            width: number;
+            height: number;
+        }]
+    };
+    artists: [{name: string}]
+    name: string;
+    preview_url: string;
+}
+
+function NewReleases(children: childType) {
+    const [songs, setMusicToPlay] = useMusicStore(state => [state.songs, state.setMusicToPlay])
+    const isLoading = useMusicStore(state => state.songIsLoading)
+    
+    const handleMusicToPlay = (input: string, details: songsData) => {
+        setMusicToPlay(input, details)
+    }
+
   return (
     <div className='mt-8'>
-        <h1 className='text-2xl'>New Releases</h1>
-        <div className='flex w-full justify-between'>
-            {newReleases.map((releases, index) => {
-              return <div key={index}>
-                  <Image src={releases.albumCover} alt="album cover" />
-                  <p>{releases.title}</p>
+        <h1 className='text-2xl mb-4'>{children.children}</h1>
+        {isLoading? <span className="loading loading-bars loading-lg"></span> : <div className='flex justify-between carousel carousel-center p-4 space-x-4 rounded-box'>
+            {songs.map((releases, index) => {
+              return <div key={index} className="carousel-item flex-col">
+                  <div className='overflow-hidden rounded-box w-[153px] h-[153px] hov'>
+                      <Image width={153} height={153} src={releases.album.images[0].url} className='rounded-box cursor-pointer transition-all' alt="album cover" />
+                      <div className='w-[100%] p-2 flex items-center justify-between detailRev'>
+                          <span>{releases.artists[0].name}</span>
+                          <span className='cursor-pointer bg-[#facd66] p-2 rounded-[100%]' onClick={() => handleMusicToPlay(releases.preview_url, releases)}><CiPlay1 /></span>
+                      </div>
+                  </div>
+                  <p className='mt-2'>{releases.name}</p>
               </div>
         })}
-        </div>
+        </div>}
     </div>
   )
 }

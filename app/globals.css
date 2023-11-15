@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  background-color: #1d2123;
+  width: auto;
+  height: auto;
+}
+
 body {
   background-color: #1d2123;
   color: white;
@@ -13,4 +19,25 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: top;
+}
+
+.filll > path {
+  fill: #facd66;
+}
+
+.detailRev {
+  position: relative;
+}
+
+.hov {
+  transition: all 0.3s ease-in-out;
+}
+
+.hov:hover > img {
+  scale: 1.25;
+}
+
+.hov:hover > .detailRev {
+  position: relative;
+  top: -50px;
 }

@@ -7,18 +7,18 @@ import Image from 'next/image'
 function Card() {
   return (
     <div className='bg-[#609EAF] pl-8 rounded-3xl flex'>
-        <div className='pt-4'>
+        <div className='pt-8'>
             <p className='mb-12'>Curated playlists</p>
             <h1 className='font-extrabold text-3xl'>R&B Hits</h1>
             <p className='text-base'>All mine, Lie again, Pretty call me everyday, <br />
             Out of time, No love, Bad habit, <br />
             and so much more.</p>
-            <span className='flex w-44 justify-between mt-12'>
-                <Image src={imgFrame} alt='Image'/> <Image className='w-auto h-auto' src={heartIcon} alt='Love Icon'/>33k Likes
+            <span className='flex w-40 justify-between mt-12 items-center'>
+                <Image src={imgFrame} alt='Image'/> <Image className='w-4 h-4' src={heartIcon} alt='Love Icon'/>33k Likes
             </span>
         </div>
         <div>
-            <Image className='background-image w-auto h-auto' src={person} alt='Artist Image'/>
+            <Image className='background-image h-full' src={person} alt='Artist Image'/>
         </div>
     </div>
   )

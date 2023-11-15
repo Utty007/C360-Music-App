@@ -1,0 +1,39 @@
+.vSlider {
+  position: relative;
+  width: 100%;
+}
+
+.vSlider > input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 2px;
+  border-radius: 5px;
+  --volume-progress: 0%; /* Set initial value */
+  background: linear-gradient(
+    to right,
+    #ddd 0%,
+    #ddd var(--volume-progress),
+    #facd66 var(--volume-progress),
+    #facd66 100%
+  );
+  outline: none;
+}
+
+.vSlider > input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 10px;
+  height: 10px;
+  background-color: #facd66;
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+  top: -3px;
+}
+
+.vSlider > input[type="range"]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 4px;
+  background: #fff;
+  border-radius: 5px;
+}
