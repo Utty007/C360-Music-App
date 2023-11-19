@@ -35,7 +35,9 @@ export type propsData = {
     type: string;
     images: [{
         url: string
-    }]
+    }];
+    id: string;
+    album_type: string
 }
 
 export type songsData = {

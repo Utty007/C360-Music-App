@@ -23,17 +23,16 @@ export type songsData = {
 }
 
 function NewReleases(children: childType) {
-    const [songs, setMusicToPlay] = useMusicStore(state => [state.songs, state.setMusicToPlay])
-    const isLoading = useMusicStore(state => state.songIsLoading)
+    const [songs, setMusicToPlay, isLoading, errorState] = useMusicStore(state => [state.songs, state.setMusicToPlay, state.songIsLoading, state.songsError])
     
     const handleMusicToPlay = (input: string, details: songsData) => {
-        setMusicToPlay(input, details)
+        setMusicToPlay(input, details, undefined)
     }
 
   return (
     <div className='mt-8'>
         <h1 className='text-2xl mb-4'>{children.children}</h1>
-        {isLoading? <span className="loading loading-bars loading-lg"></span> : <div className='flex justify-between carousel carousel-center p-4 space-x-4 rounded-box'>
+        {!errorState && isLoading? <span className="loading loading-bars loading-lg"></span> : <div className='flex justify-between carousel carousel-center p-4 space-x-4 rounded-box'>
             {songs.map((releases, index) => {
               return <div key={index} className="carousel-item flex-col">
                   <div className='overflow-hidden rounded-box w-[153px] h-[153px] hov'>

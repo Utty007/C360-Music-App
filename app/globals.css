@@ -14,6 +14,11 @@ body {
   font-family: Quicksand;
 }
 
+body > div {
+  background-color: #1d2123;
+  color: white;
+}
+
 .background-image {
   background-image: url("../app/Media/Vector.png");
   background-size: cover;
