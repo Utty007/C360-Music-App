@@ -55,17 +55,12 @@ function MediaPlayer() {
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState<number>(100);
 
-  // ...
-
 useEffect(() => {
   if (typeof document !== 'undefined') {
     const progress = (currentTime / duration) * 100;
     document.documentElement.style.setProperty('--progress', `${progress}%`);
   }
 }, [currentTime, duration]);
-
-// ...
-
 
   useEffect(() => {
     // When musicToPlay changes, update the audio source and play the new song

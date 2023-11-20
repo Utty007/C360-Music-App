@@ -9,7 +9,6 @@ import radioIcon from '@/app/Media/radio.svg'
 import videosIcon from '@/app/Media/videos.svg'
 import ProfileIcon from '@/app/Media/profile.svg'
 import logoutIcon from '@/app/Media/Logout.svg'
-import c360Logo from '@/app/Media/logo.svg'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation';
 import { useMusicStore } from '../Store/musicStore'

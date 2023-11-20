@@ -1,6 +1,5 @@
 "use client"
 import React, { useEffect } from 'react'
-// import NotFound from './Notfound'
 import Image from 'next/image'
 import { items, useMusicStore } from '../../Store/musicStore'
 import { BsPlay } from 'react-icons/bs'
@@ -55,11 +54,7 @@ function Page({ params: album_id }: pageProps) {
             }))
         );
     }
-    //  images: [{
-    //             url: album.images[0].url,
-    //             width: album.images[0].width,
-    //             height: album
-    //         }],
+
     const handlePlay = (index: number) => {
         setIsPlaying(true)
         setSongs(songs)
