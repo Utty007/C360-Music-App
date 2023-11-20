@@ -214,7 +214,7 @@ useEffect(() => {
             />
           )}
         </div>
-        <div className='pl-3'>
+        <div className='pl-3 pr-2 sm:pr-0'>
           <h1>{musicDet?.artists[0].name}</h1>
           <p>{musicDet?.name}</p>
         </div>
