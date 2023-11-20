@@ -64,7 +64,7 @@ function Page({ params: album_id }: pageProps) {
 
   return (
       <div className="relative top-20 px-4 sm:px-0 mt-6 sm:pr-4 pb-32 sm:pl-28">
-          {isLoading ? <span className="loading loading-bars loading-lg"></span> :  <>
+          {isLoading ? <span className="loading loading-bars loading-lg"></span> : albumData !== undefined ? <>
               {albumData.map((data, index) => {
             
               return (
@@ -98,7 +98,7 @@ function Page({ params: album_id }: pageProps) {
               </div>
               )
           })}
-          </> }
+          </> : <h1>Album not found.</h1>}
           {errorState && <div role="alert" className="alert alert-error cursor-pointer" onClick={() => getAlbums(album_id.album_id, token)}>
             <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
             <span>A network error occured! Click here to try again.</span>

@@ -169,6 +169,7 @@ export const useMusicStore = create<musicState>((set, get) => ({
             }
 
             const getAlbums = await fetch(url, params)
+            console.log(getAlbums.status)
             const res = await getAlbums.json()
             set({ charts: res.albums, albumIsLoading: false })
         
