@@ -1,7 +1,7 @@
 import React from 'react'
 import imgFrame from '@/app/Media/Frame 4.png'
 import heartIcon from '@/app/Media/Heart.png'
-import person from '@/app/Media/Pexels Photo by Eric Esma.png'
+import person from '@/app/Media/Pexels.png'
 import Image from 'next/image'
 
 function Card() {
