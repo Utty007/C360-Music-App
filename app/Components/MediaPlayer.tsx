@@ -55,8 +55,17 @@ function MediaPlayer() {
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState<number>(100);
 
-  const progress = (currentTime / duration) * 100;
-  document.documentElement.style.setProperty('--progress', `${progress}%`);
+  // ...
+
+useEffect(() => {
+  if (typeof document !== 'undefined') {
+    const progress = (currentTime / duration) * 100;
+    document.documentElement.style.setProperty('--progress', `${progress}%`);
+  }
+}, [currentTime, duration]);
+
+// ...
+
 
   useEffect(() => {
     // When musicToPlay changes, update the audio source and play the new song
@@ -69,9 +78,6 @@ function MediaPlayer() {
         });
         setIsPlaying(true);
 
-        if (isPlaying) {
-          console.log(musicToPlay);
-        }
       }
     }
   }, [musicToPlay]);
@@ -92,7 +98,6 @@ function MediaPlayer() {
 
   const toggleRepeat = () => {
     setIsRepeat(!isRepeat);
-    console.log('Repeat Toggled');
   };
 
   const handleTimeUpdate = () => {
@@ -103,7 +108,6 @@ function MediaPlayer() {
 
   const handleLoadedMetadata = () => {
     if (audioRef.current) {
-      console.log(audioRef.current.duration);
       setDuration(audioRef.current.duration);
     }
   };
@@ -173,14 +177,14 @@ function MediaPlayer() {
   };
 
   useEffect(() => {
-    if (mtpDetails?.preview_url === musicToPlay) {
+    if (mtpDetails?.track.preview_url === musicToPlay) {
     setMusicDet({
-      name: mtpDetails.name,
-      preview_url: mtpDetails.preview_url,
+      name: mtpDetails.track.name,
+      preview_url: mtpDetails.track.preview_url,
       image: {
-        url: mtpDetails.album.images[0].url
+        url: mtpDetails.track.album.images[0].url
       },
-      artists: [{ name: mtpDetails.artists.map(artists => artists.name).join(' ft ') }],
+      artists: [{ name: mtpDetails.track.artists[0].name}],
       duration_ms: 30
     })
   } else if (songs[currentSongIndex]?.preview_url === musicToPlay) {
@@ -199,9 +203,9 @@ function MediaPlayer() {
   return (
     <div
       onClick={() => setShowSearchOutput(false)}
-      className='bg-neutral-800 px-8 py-4 bg-opacity-30 flex w-[100%] items-center z-50 fixed bottom-0 left-0 border border-white border-opacity-10 backdrop-blur-[30px]'
+      className='bg-neutral-800 px-8 py-4 bg-opacity-30 flex w-[100%] justify-between sm:justify-normal items-center z-50 fixed bottom-0 left-0 border border-white border-opacity-10 backdrop-blur-[30px]'
     >
-      <div className='flex w-[15%] items-center justify-center'>
+      <div className='flex items-center justify-center'>
         <div>
           {musicDet?.image.url === undefined ? (
             <FaRecordVinyl className='w-[70px] h-[70px]' />
@@ -220,20 +224,20 @@ function MediaPlayer() {
           <p>{musicDet?.name}</p>
         </div>
       </div>
-      <div className='flex flex-col w-[70%] items-center justify-center'>
-        <div className='flex items-center justify-between mb-3 w-[180px]'>
-          <span className='cursor-pointer' onClick={() => handleShuffle()}>
+      <div className='flex flex-col sm:w-[70%] items-center justify-center'>
+        <div className='flex items-center justify-between mb-3 sm:w-[180px]'>
+          <span className='cursor-pointer hidden sm:block' onClick={() => handleShuffle()}>
             <Shuffle className='cursor-pointer' />
           </span>
-          <Image onClick={() => playPrev()} className='w-5 h-5 cursor-pointer' src={prevIcon} alt='prev button' />
+          <Image onClick={() => playPrev()} className='w-5 h-5 cursor-pointer hidden sm:block' src={prevIcon} alt='prev button' />
           <span
             onClick={togglePlayPause}
-            className='bg-[#facd66] rounded-[99.17px] p-2 cursor-pointer shadow justify-center items-center gap-[3.33px] inline-flex'
+            className='bg-[#facd66] rounded-[99.17px] p-2 mr-5 sm:mr-0 cursor-pointer shadow justify-center items-center gap-[3.33px] inline-flex'
           >
             {isPlaying ? <BsPause /> : <BsPlay />}
           </span>
           <Image onClick={() => playNext()} className='w-5 h-5 cursor-pointer' src={nextIcon} alt='next button' />
-          <span onClick={toggleRepeat} className='cursor-pointer'>
+          <span onClick={toggleRepeat} className='cursor-pointer hidden sm:block'>
             <Repeat className='cursor-pointer' />
           </span>
         </div>
@@ -250,7 +254,7 @@ function MediaPlayer() {
           <source src={musicDet?.preview_url} type='audio/mpeg' />
         </audio>
       </div>
-      <div className='flex w-[15%] items-center'>
+      <div className='w-[15%] items-center hidden sm:flex'>
         <div onClick={handleVolMute} className='cursor-pointer'>
           {volumeMute ? <FaVolumeXmark /> : <FaVolumeHigh />}
         </div>

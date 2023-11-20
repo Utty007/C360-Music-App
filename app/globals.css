@@ -46,3 +46,23 @@ body > div {
   position: relative;
   top: -50px;
 }
+
+@media screen and (max-width: 1024px) {
+  .m-flex-col {
+    flex-direction: column;
+  }
+
+  .m-mg-top {
+    margin-top: 30px;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  /* .med-max-sm-d {
+    display: none;
+  } */
+
+  .med-max-sm-mb {
+    margin-bottom: 15px;
+  }
+}

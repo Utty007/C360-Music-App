@@ -39,6 +39,8 @@ interface musicState {
     mtpDetails: songsData | undefined;
     isLoading: boolean;
     setIsLoading: (input: boolean) => void;
+    empty: boolean;
+    setEmpty: (input: boolean) => void
 }
 
 export const useMusicStore = create<musicState>((set, get) => ({
@@ -62,7 +64,11 @@ export const useMusicStore = create<musicState>((set, get) => ({
     },
     artistId: "",
     getArtistData: async () => {
-        try {
+        if (get().musicSearchInput.trim().length === 0 || get().musicSearchInput.trim() === '') {
+            set({empty: true, isLoading: false})
+        } else {
+            set({empty: false})
+            try {
             set({isLoading: true, searchError: false})
             const options = {
                 method: 'GET',
@@ -82,10 +88,10 @@ export const useMusicStore = create<musicState>((set, get) => ({
             }
 
             const res = await artistsAlbums.json()
-            console.log(res)
             set({artistData: res.items, isLoading: false})
         } catch (error) {
             set({searchError: true, isLoading: false})
+        }
         }
     }, 
     artistData: [],
@@ -97,6 +103,7 @@ export const useMusicStore = create<musicState>((set, get) => ({
     songs: [],
     songIsLoading: true,
     getSongs: async () => {
+        
         try {
             set({songsError: false})
             const url = 'https://accounts.spotify.com/api/token';
@@ -110,6 +117,15 @@ export const useMusicStore = create<musicState>((set, get) => ({
             const response = await fetch(url, options);
             const result = await response.json();
 
+            const getPlaylist = await fetch('https://api.spotify.com/v1/playlists/37i9dQZF1DX4NsREGkRuCe', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${result.access_token}`
+                }
+            })
+            const resp = await getPlaylist.json()
+
             const fetchUrl = `https://api.spotify.com/v1/tracks?ids=6lrAyxpomr1dkHltiUqWSw,3GMdp6clyAh7wZWVYOtoS9,1JqxgXNhqWpFss7nZzlwOz,1mk8ZC9OeTZMr8Wy31LqRj,0oeaQHUGSe5azi1YzLA1aB,3kFdOJRsCytUFYilg7rXnX,4EDMfKmlvrDemvJBcoZvHk`
             const res = await fetch(fetchUrl, {
             method: 'GET',
@@ -122,7 +138,7 @@ export const useMusicStore = create<musicState>((set, get) => ({
                 set({songsError: true})
             }
             const data = await res.json();
-            set({ songs: data.tracks, songIsLoading: false })
+            set({ songs: resp.tracks.items, songIsLoading: false })
             
         } catch (error) {
             set({ songsError: true, isLoading: false })
@@ -164,7 +180,6 @@ export const useMusicStore = create<musicState>((set, get) => ({
     musicToPlay: '',
     mtpDetails: undefined,
     setMusicToPlay: (input, details?) => {
-        console.log(input)
         set({ musicToPlay: input });
         set({ mtpDetails: details || undefined})
     },
@@ -176,7 +191,11 @@ export const useMusicStore = create<musicState>((set, get) => ({
     },
     albumError: false,
     songsError: false,
-    searchError: false
+    searchError: false,
+    empty: false,
+    setEmpty: (input) => {
+        set({empty: input})
+    }
 }
 ))
 

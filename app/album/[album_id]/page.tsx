@@ -1,6 +1,6 @@
 "use client"
 import React, { useEffect } from 'react'
-import Notfound from './not-found'
+// import NotFound from './Notfound'
 import Image from 'next/image'
 import { items, useMusicStore } from '../../Store/musicStore'
 import { BsPlay } from 'react-icons/bs'
@@ -68,7 +68,7 @@ function Page({ params: album_id }: pageProps) {
     }
 
   return (
-      <div className="relative top-20 mt-6 pb-32 pl-28">
+      <div className="relative top-20 px-4 sm:px-0 mt-6 sm:pr-4 pb-32 sm:pl-28">
           {isLoading ? <span className="loading loading-bars loading-lg"></span> : albumData !== undefined ? <>
               {albumData.map((data, index) => {
             
@@ -94,7 +94,7 @@ function Page({ params: album_id }: pageProps) {
                             return (
                                 <div key={index} className='flex flex-row items-center p-2 my-2 justify-between w-full bg-neutral-700 bg-opacity-40 rounded-[15px] backdrop-blur-[10px]'>
                                     <span className='w-[40%]'>{songData.name}</span>
-                                    <span className='w-[30%]'>{songData.artists.map(artists => artists.name).join(', ')}</span>
+                                    <span className='w-[30%]'>{songData.artists.map(artists => artists.name).join(' ft ')}</span>
                                     <span className='w-[20%] text-right capitalize'>{songData.type}</span>
                                 </div>
                             )
@@ -103,7 +103,7 @@ function Page({ params: album_id }: pageProps) {
               </div>
               )
           })}
-          </> : <Notfound />}
+          </> : <h1>Album not found.</h1>}
           {errorState && <div role="alert" className="alert alert-error cursor-pointer" onClick={() => getAlbums(album_id.album_id, token)}>
             <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
             <span>A network error occured! Click here to try again.</span>

@@ -20,7 +20,7 @@ function Aside() {
     const pathname = usePathname()
     
   return (
-    <div onClick={() => setShowSearchOutput(false)} className='flex flex-col mx-5 my-8 w-fit fixed z-20 top-0 left-0 items-center h-[100vh]'>
+    <div onClick={() => setShowSearchOutput(false)} className='hidden sm:flex flex-col mx-5 my-8 w-fit fixed z-20 top-0 left-0 items-center h-[100vh]'>
         <div><Image src={c360Logo} alt='Logo' /></div>
         <div className='bg-[#1A1E1F] p-4 mt-8 rounded-full h-40 flex flex-col items-center justify-between'>
             <Link href="/"><Image src={pathname === '/' ||  pathname.startsWith('/album/')  ? activeHomeIcon : homeIcon} alt='Home Icon' /></Link>

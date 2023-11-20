@@ -27,20 +27,20 @@ function TopCharts() {
     // console.log(Charts)
     const albums: albums[] = Charts
   return (
-    <div className='ml-12'>
+    <div className='ml-5 md:ml-12 m-mg-top'>
         <h1 className='text-2xl mb-4'>Top Albums</h1>
         {albumIsLoading ? <span className="loading loading-bars loading-lg"></span> : albums.map(album => {
             return <Link key={album.id} href={`/album/${album.id}`} onClick={() => setIsLoading(true)}>
             <div key={album.id} className='flex bg-[#1A1E1F] p-4 mb-2 rounded-xl items-center justify-between w-96'>
                   <div className='flex items-center'>
                     <div><Image width={album.images[2].width} height={album.images[2].height} src={album.images[2].url} alt="album cover" /></div>
-                  <div className='ml-4'>
-                      <h2>{album.name}</h2>
-                      <p>{album.artists[0].name}</p>
-                      <p>{album.total_tracks} Tracks</p>
+                    <div className='ml-4'>
+                        <h2>{album.name}</h2>
+                        <p>{album.artists[0].name}</p>
+                        <p>{album.total_tracks} Tracks</p>
+                    </div>
                   </div>
-                  </div>
-                </div>
+              </div>
             </Link>
         })}
       {errorState && <div role="alert" className="alert alert-error cursor-pointer" onClick={() => getAlbums()}>

@@ -9,7 +9,7 @@ type propsData = {
 
 function DurationSlider(props: propsData) {
   return (
-    <div className={Style.dSlider}>
+    <div className={`${Style.dSlider} hidden sm:block`}>
         <input type='range' 
             {...props}
             className='h-[4px] w-[90%] bg-white bg-opacity-5 rounded-[50px]'>            

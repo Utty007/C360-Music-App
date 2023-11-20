@@ -5,26 +5,35 @@ import searchIcon from '@/app/Media/search.svg'
 import { FormEvent } from 'react'
 import { useMusicStore } from '../Store/musicStore'
 import ArtistData from '../UI/artistData'
+import C360Logo from '@/app/Media/logo.svg'
+import { IoMenu, IoClose } from "react-icons/io5";
+import { useUiStore } from '../Store/UiStore'
 
 function Header() {
-  const [musicSearchInput, setMusicSearchInput, getArtistData, setArtistData, showSearchOutput, setShowSearchOutput, errorState] = useMusicStore(state => [state.musicSearchInput, state.setMusicSearchInput, state.getArtistData, state.setArtistData, state.showSearchOutput, state.setShowSearchOutput, state.searchError])
+  const [musicSearchInput, setMusicSearchInput, getArtistData, setArtistData, showSearchOutput, setShowSearchOutput, setEmpty] = useMusicStore(state => [state.musicSearchInput, state.setMusicSearchInput, state.getArtistData, state.setArtistData, state.showSearchOutput, state.setShowSearchOutput, state.setEmpty])
+  const [toggleMobNav, setToggle] = useUiStore(state => [state.toggleMobNav, state.setToggle])
   const handleSearch = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    setShowSearchOutput(true)
-    getArtistData();
-    setMusicSearchInput('')
+      setEmpty(false)
+      setShowSearchOutput(true)
+      getArtistData();
+      setMusicSearchInput('')
   }
 
   return (
-    <header className='py-8 items-center fixed z-10 bg-[#1d2123] w-full top-0'>
+    <header className='py-4 sm:py-7 items-center fixed z-10 bg-[#1d2123] w-full top-0'>
       {showSearchOutput && <ArtistData />}
-      {errorState && <div role="alert" className="alert alert-error">
-        <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-        <span>An error occured! Check your internet connection and try again.</span>
-      </div>
-      }
-        <div className='flex ml-20'>
-            <Image className='w-auto h-auto' src={searchIcon} alt='Search Icon' />
+      <div className='flex ml-5 items-center justify-between sm:justify-normal'>
+        <div className='flex items-center'>
+          <div onClick={() => setToggle(!toggleMobNav)} className='pr-2'>
+          {toggleMobNav? <IoClose className='w-6 h-6' /> : <IoMenu className='w-6 h-6' />}
+   </div>
+        <div className='sm:hidden'>
+          <Image src={C360Logo} alt='C360 Logo' />
+        </div>
+        </div>
+        <div className='flex flex-row-reverse sm:flex-row ml-5 mr-5 sm:ml-20 items-center'>
+            <Image width={16} height={24} src={searchIcon} alt='Search Icon' />
             <form onSubmit={handleSearch}>
               <input className='outline-none bg-transparent ml-4 w-full flex-1' value={musicSearchInput} onChange={(e) => {
                 setArtistData()
@@ -34,6 +43,7 @@ function Header() {
               <button type='button' hidden/>
             </form>
         </div>
+      </div>
     </header>
   )
 }
