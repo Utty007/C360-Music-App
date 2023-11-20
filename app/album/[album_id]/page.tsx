@@ -70,7 +70,7 @@ function Page({ params: album_id }: pageProps) {
               return (
                 <div key={index}>
                     <div className='flex flex-wrap items-center mb-4 font-["Quicksand"]'>
-                        <div>
+                        <div className='pl-4 sm:pl-0'>
                             <Image className='rounded-lg' src={data.images[1].url} width={data.images[1].width} height={data.images[1].height} alt='Album Cover' />
                         </div>
                         <div className='pl-4'>
